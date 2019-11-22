@@ -71,13 +71,14 @@ def random_pattern_test(path):
 		avg_ratio[i] = avg_ratio[i]/30
 		avg_timing[i] = avg_timing[i]/30
 	save_bar_graph(avg_ratio, avg_timing, "Random Pattern Testing Average", "graphs/Random Pattern Testing Average.svg")
-	
+
 	with open(os.getcwd() + f"/data.txt", 'a') as records:
-		records.write(f"\nOriginal Size: {original_size} bytes\n")
-		records.write(f"\t\t\tSize\t\tCompression Ratio\t\t\tTime\n")
+		records.write("\nAverage values\n")
+		records.write("\t\t\tCompression Ratio\t\t\tTime\n")
+		tick_label = ['Huffman', 'RLE', 'LZW', 'LZ78', 'PPM']
 		for i in range(5):
-			spacing = ["\t" if i is not 0 else "", "\t" if int(ratio[i]) < 100 else "", "\t" if int(ratio[i]/100*original_size) < 100000 else ""]
-			records.write(f"{tick_label[i]}:\t{spacing[0]}{int(ratio[i]/100*original_size)} bytes{spacing[2]}\t{ratio[i]}%\t\t{timing[i]} ms\n")
+			spacing = "\t" if i is not 0 else ""
+			records.write(f"{tick_label[i]}:\t{spacing}\t{avg_ratio[i]}%\t\t{avg_timing[i]} ms\n")
 
 
 
@@ -96,7 +97,7 @@ def random_test(path):
 	for test_number in range(30):
 		text = ""
 
-		for i in range(random.randint(1000000, 5000000)):
+		for i in range(random.randint(200000, 1000000)):
 			text += random.choice(string.ascii_letters)
 
 		sample_ratio, sample_timing = testing(text, test_number + 1, path, "Random Testing")
@@ -108,6 +109,14 @@ def random_test(path):
 		avg_ratio[i] = avg_ratio[i]/30
 		avg_timing[i] = avg_timing[i]/30
 	save_bar_graph(avg_ratio, avg_timing, "Random Testing Average", "graphs/Random Testing Average.svg")
+
+	with open(os.getcwd() + f"/data.txt", 'a') as records:
+		records.write("\nAverage values\n")
+		records.write("\t\t\tCompression Ratio\t\t\tTime\n")
+		tick_label = ['Huffman', 'RLE', 'LZW', 'LZ78', 'PPM']
+		for i in range(5):
+			spacing = "\t" if i is not 0 else ""
+			records.write(f"{tick_label[i]}:\t{spacing}\t{avg_ratio[i]}%\t\t{avg_timing[i]} ms\n")
 
 def testing(text, test_number, path, test_name):
 
