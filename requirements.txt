@@ -1,0 +1,3 @@
+lzw3
+numpy
+matplotlib
